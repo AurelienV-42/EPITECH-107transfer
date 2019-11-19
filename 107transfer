@@ -1,0 +1,42 @@
+#!/usr/bin/python3
+
+# "0x1x2x3" "1,023x232,23x2"  (0+1x+2x²+3x**3)/(2x²+232,23x+1,023)
+from math import *
+import sys
+
+if not len(sys.argv) % 2 or len(sys.argv) <= 2:
+     print("Error peer")
+     sys.exit(84)
+
+tab = []
+for i in range(len(sys.argv[1:])):
+     tab.append(sys.argv[i + 1].split("*"))
+
+try:
+     for i in range(len(tab)):
+          for nb in range(len(tab[i])):
+               tab[i][nb] = int(tab[i][nb])
+except:
+     sys.exit(84)
+
+i = 0
+nb = 0
+function = 0
+nb_stars = 0
+while (i <= 1.000001):
+     function = 1
+     for nb in range(0, len(tab), 2):
+          num = 0
+          den = 0
+          if (tab[nb] != tab[nb + 1]):
+               for first in range(len(tab[nb])):
+                    num += tab[nb][first] * (i ** first)
+               for second in range(len(tab[nb + 1])):
+                    den += tab[nb + 1][second] * (i ** second)
+               try :
+                    function *= (num / den)
+               except :
+                    print("Division by zero")
+                    sys.exit(84)
+     print("%.3g"%i, "->", "%.5f"%function)
+     i += 0.001
